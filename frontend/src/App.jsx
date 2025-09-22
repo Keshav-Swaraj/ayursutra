@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/authContext';
 import HomePage from './components/HomePage';
 import Sidebar from './components/Sidebar';
@@ -17,21 +17,37 @@ import Profile from './components/Profile';
 import DoctorDashboard from './components/DoctorDashboard';
 import DoctorPatients from './components/DoctorPatients';
 import DoctorSchedule from './components/DoctorSchedule';
-import DoctorAnalytics from './components/DoctorAnalytics';
 import DoctorProtocols from './components/DoctorProtocols';
 
 // Reusable Layout component for both dashboards
 const DashboardLayout = ({ children, role }) => {
-  const { user, token } = useAuth();
+  const { user, token, logout } = useAuth();
+  const navigate = useNavigate();
+  
   if (!user || !token) {
     return <Navigate to="/login" replace />;
   }
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+  };
+
   return (
     <div className="min-h-screen bg-gray-100 flex">
       <div className="w-64 bg-white">
         {role === 'patient' ? <Sidebar /> : <DoctorSidebar />}
       </div>
-      <div className="flex-1 bg-gray-100">
+      <div className="flex-1 bg-gray-100 relative">
+        {/* Top right logout button */}
+        <div className="absolute top-4 right-4 z-10">
+          <button
+            onClick={handleLogout}
+            className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors text-sm font-medium shadow-sm"
+          >
+            Logout
+          </button>
+        </div>
         {children}
       </div>
     </div>
@@ -87,11 +103,6 @@ const AppRoutes = () => {
       <Route path="/doctor-schedule" element={
         <DashboardLayout role="doctor">
           <DoctorSchedule />
-        </DashboardLayout>
-      } />
-      <Route path="/doctor-analytics" element={
-        <DashboardLayout role="doctor">
-          <DoctorAnalytics />
         </DashboardLayout>
       } />
       <Route path="/doctor-protocols" element={

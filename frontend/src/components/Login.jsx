@@ -43,14 +43,18 @@ const Login = () => {
         {/* Left: Image placeholder */}
         <div className="hidden md:flex w-1/2 items-center justify-center bg-gray-100">
           <div className="w-3/4 h-3/4 bg-gray-300 rounded-lg">
-            {/* The actual image would be set here via CSS or an <img> tag */}
+            <img 
+              src="/login.jpg" // <--- REPLACE THIS WITH YOUR IMAGE PATH
+              alt="Ayurveda Login Illustration" 
+              className="w-full h-full object-cover rounded-lg" // <--- CHANGED TO object-cover
+            />
           </div>
         </div>
 
         {/* Right: Login form */}
         <div className="w-full md:w-1/2 bg-white flex items-center justify-center p-6 md:p-12">
           <div className="w-full max-w-md">
-            <h1 className="text-2xl font-bold text-gray-900">Patient Login</h1>
+            <h1 className="text-2xl font-bold text-gray-900">Login</h1>
             <p className="text-gray-600 mt-1">Access your dashboard and appointments</p>
             {error && <div className="mt-4 text-sm text-red-500">{error}</div>}
 

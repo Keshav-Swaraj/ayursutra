@@ -1,15 +1,7 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/authContext'; // Import your auth context
+import { Link } from 'react-router-dom';
 
 const Header = () => {
-  const { user, logout } = useAuth();
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    logout();
-    navigate('/');
-  };
 
   return (
     <header className="sticky top-0 z-50 bg-white shadow-sm">
@@ -43,29 +35,18 @@ const Header = () => {
 
           {/* Action Buttons */}
           <div className="flex items-center space-x-4">
-            {user ? (
-              <button
-                onClick={handleLogout}
-                className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors"
-              >
-                Logout
-              </button>
-            ) : (
-              <>
-                <Link 
-                  to="/login" 
-                  className="px-4 py-2 text-ayur-blue border border-ayur-blue rounded-lg hover:bg-ayur-blue/10 transition-colors"
-                >
-                  Login
-                </Link>
-                <Link 
-                  to="/signup" 
-                  className="px-4 py-2 bg-ayur-green text-white rounded-lg hover:bg-ayur-green/80 transition-colors"
-                >
-                  Sign Up
-                </Link>
-              </>
-            )}
+            <Link 
+              to="/login" 
+              className="px-4 py-2 text-ayur-blue border border-ayur-blue rounded-lg hover:bg-ayur-blue/10 transition-colors"
+            >
+              Login
+            </Link>
+            <Link 
+              to="/signup" 
+              className="px-4 py-2 bg-ayur-green text-white rounded-lg hover:bg-ayur-green/80 transition-colors"
+            >
+              Sign Up
+            </Link>
           </div>
         </div>
       </div>
